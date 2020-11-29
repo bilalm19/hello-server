@@ -16,12 +16,9 @@ test:
 	$(GO_TEST) $(TEST_DIR) -v
 
 .PHONY: docker-build-push
-docker-build-push: docker-build docker-push
+docker-build-push: docker-build
+	docker push $(DOCKER_REPOSITORY):$(IMAGE_TAG)
 
 .PHONY: docker-build
 docker-build:
 	DOCKER_BUILDKIT=1 docker build --target prod -t $(DOCKER_REPOSITORY):$(IMAGE_TAG) .
-
-.PHONY: docker-push
-docker-push:
-    docker push $(DOCKER_REPOSITORY):$(IMAGE_TAG)
